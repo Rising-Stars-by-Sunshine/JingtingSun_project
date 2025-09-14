@@ -41,7 +41,7 @@ flowchart TD
   D --> F[Cluster labels and mean sentiment]
   F --> G[Findings descriptive and controlled]
 ```
-
+Figure 1. Conceptual flowchart of the research design. Source: authors’ visualization based on Shanghai Library National Periodical Index 1911–1937.
 
 
 
