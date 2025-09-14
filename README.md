@@ -31,8 +31,15 @@ We refer to **Figure 1** when explaining the design.
 - **Computing power**  
   Dataset is modest; CPU suffices for all analyses. GPU is optional for transformer-based robustness checks.
 
-mermaid flowchart TD A[Research question] --> B[Framing when Ta appears in headline] B --> C[Sentiment with SnowNLP] B --> D[Topics with TF-IDF and KMeans] B --> E[Logit on explicit-Ta subset (FE)] C --> F[Year and phase shares] D --> F[Cluster labels and mean sentiment] F --> G[Findings: descriptive and controlled]
-
+```mermaid
+flowchart TD
+  A[Research question] --> B[Framing when Ta appears in headline]
+  B --> C[Sentiment with SnowNLP]
+  B --> D[Topics with TF-IDF and KMeans]
+  B --> E[Logit on explicit-Ta subset (FE)]
+  C --> F[Year and phase shares]
+  D --> F[Cluster labels and mean sentiment]
+  F --> G[Findings: descriptive and controlled]
 *Figure 1. Conceptual flowchart of the research design. Source: authors’ visualization (Mermaid) based on Shanghai Library National Periodical Index, 1911–1937.*
 
 
