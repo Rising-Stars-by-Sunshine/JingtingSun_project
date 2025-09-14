@@ -1,62 +1,61 @@
-Women and the Pronoun Ta in Republican-Era Newspapers (1911–1937)
-Abstract
+# Women and the Pronoun “她” in Republican-Era Newspapers (1911–1937)
 
-This project studies how Republican-era newspapers (1911–1937) framed women when the newly invented feminine pronoun Ta appeared explicitly in headlines, and whether that tone shifted with wartime mobilization and the expansion of new education and female creators. Using ~20,000 title-level records exported from the Shanghai Library National Periodical Index (NPI), we run sentiment analysis (SnowNLP), topic clustering (TF-IDF with KMeans), and a fixed-effects logistic model on the subset of headlines that explicitly use Ta. As noted below and in Figure 1, the design maps cleanly to the AI Triad (Data, Algorithms, Computing power) and yields both descriptive trends and controlled estimates.
+## Abstract
+This project studies how Republican-era newspapers (1911–1937) framed women when the newly invented feminine pronoun “她” appeared explicitly in headlines, and whether that tone shifted with wartime mobilization and the expansion of new education and female creators. Using ~20,000 title-level bibliographic records exported from the Shanghai Library’s National Periodical Index (NPI), we conduct sentiment analysis (SnowNLP), topic clustering (TF-IDF + KMeans), and fixed-effects logistic regression on the subset of headlines that explicitly use “她”. The aim is to provide a reproducible, quantitative account of gendered representation in historical media.
 
-System configuration (local + cloud)
+---
 
-Local: Python ≥ 3.10, Jupyter
+## System configuration (local + cloud)
+- **Local**: Python ≥ 3.10, Jupyter
+- **Key libraries**: `pandas`, `matplotlib`, `scikit-learn`, `statsmodels`, `snownlp`
+- **Cloud**: Google Colab tested; repo includes `requirements.txt` for portability
 
-Libraries: pandas, matplotlib, scikit-learn, statsmodels, snownlp
+---
 
-Cloud: Google Colab tested; requirements.txt provided
+## Research design and AI-Triad connections
+Our research design has three analytic layers that map directly to the **AI Triad**—**Data, Algorithms, Computing power**—and are visualized in **Figure 1**.
 
-Research design and AI-Triad connections
+- **Data**  
+  Structured export from the **Shanghai Library NPI**. Records dated 1911–1937 where the index flags that “她” appears in the title or in the article text; we retain **title-level bibliographic metadata only** (no full text). Fields are cleaned and normalized (dates in YYYY-MM-DD; provenance preserved). The table has ~20k rows, enabling comparisons between the **overall corpus of titles** and the **subset with explicit “她” in the headline**.
 
-We refer to Figure 1 when explaining the design.
+- **Algorithms**  
+  1) **Sentiment**: SnowNLP probability → positive / neutral / negative with a small neutral band.  
+  2) **Topics**: character 2–3-gram **TF-IDF** + **KMeans** to surface themes (e.g., war mobilization, schooling, creators) and compare their average sentiment.  
+  3) **Regression**: **fixed-effects logit** on the **she=1** subset to assess whether sentiment differs across historical phases and topics while holding newspaper and year constant.
 
-Data — Structured export from Shanghai Library NPI (1911–1937). Records where the index flags Ta in the title or article text. We keep title-level metadata only (no full text). Dates normalized to YYYY-MM-DD; provenance preserved. About 20k rows support comparisons between the overall corpus and the subset with explicit Ta in the headline.
+- **Computing power**  
+  Corpus size is modest; all analyses run efficiently on CPU. GPU is optional for any transformer-based robustness checks.
 
-Algorithms —
+---
 
-Sentiment with SnowNLP (probability → positive / neutral / negative, with a small neutral band).
+## Conceptual flowchart (Figure 1)
 
-Topics via character 2–3-gram TF-IDF and KMeans to surface themes (war mobilization, schooling, creators) and compare mean sentiment by theme.
-
-Regression using fixed-effects logistic on the she=1 subset (explicit Ta in title), controlling for newspaper and year, to assess differences across phases and topics.
-
-Computing power — Dataset is modest; CPU suffices. GPU only if testing transformer robustness.
-
-<a id="fig1"></a>
-
-Conceptual flowchart (Figure 1)
+```mermaid
 flowchart TD
-  A[Research question] --> B[Framing when Ta appears in headline]
-  B --> C[Sentiment with SnowNLP]
-  B --> D[Topics with TF-IDF and KMeans]
-  B --> E[Logit on she subset with fixed effects]
-  C --> F[Year and phase shares]
-  D --> F[Cluster labels and mean sentiment]
-  F --> G[Descriptive and controlled findings]
+    A[Research question] --> B[Women framing when she appears in headline]
+    B --> C[Sentiment analysis with SnowNLP]
+    B --> D[Topic clustering with TF-IDF and KMeans]
+    B --> E[Fixed-effects logit on she subset]
+    C --> F[Year and phase shares]
+    D --> F[Cluster labels and mean sentiment]
+    F --> G[Findings: trends, topic differences, controlled effects]
+  Figure 1. Conceptual flowchart linking the core research question to the three analytic layers (sentiment, topics, regression) and showing how these produce descriptive and controlled findings. We refer to Figure 1 in the text above when explaining the research design and AI-Triad connections.
 
+## FAIR & CARE principal
 
-Figure 1. Conceptual flowchart linking the core research question to three analytic layers (sentiment, topics, regression) and showing how these produce both descriptive trends and controlled estimates. We cite Figure 1 in the sections above to explain the research design and its AI-Triad connections. In text, you can write: “see Figure 1
-”.
+- **FAIR ** – Findable: Public GitHub repo with clear directory structure and dataset metadata.
 
-Brief note on FAIR & CARE principles (how they apply here)
+- **FAIR ** – Accessible: Open formats (CSV/XLSX), versioned code and data subset; instructions for local and Colab runs.
 
-FAIR — Findable: Public GitHub repository with clear directories and dataset metadata.
+- **FAIR ** – Interoperable: Standardized fields (e.g., date in YYYY-MM-DD), UTF-8 text; analysis in common Python libraries.
 
-FAIR — Accessible: Open formats (CSV/XLSX), versioned data subset and code; instructions for local and Colab runs.
+- **FAIR ** – Reusable: Data dictionary, preprocessing steps, and notebooks enable replication and extension.
 
-FAIR — Interoperable: Standardized fields (e.g., date in YYYY-MM-DD), UTF-8 encoding; analysis with widely used Python libraries.
+- **CARE ** – Collective Benefit: Results support research on gender representation and informed media practices.
 
-FAIR — Reusable: Data dictionary, preprocessing steps, and notebooks provided to enable replication and extension.
+- **CARE ** – Authority to Control: Provenance from the Shanghai Library NPI is preserved and cited; we acknowledge custodianship.
 
-CARE — Collective Benefit: Findings inform research on gender representation and better media practices.
+- **CARE ** – Responsibility: Interpretations contextualize period-specific biases; we avoid sensationalizing historical discourse.
 
-CARE — Authority to Control: Provenance from the Shanghai Library NPI is preserved and cited; custodianship acknowledged.
+- **CARE ** – Ethics: We present findings as historical descriptions, encourage critical reading, and document limitations of title-only metadata.
 
-CARE — Responsibility: Interpretations situate results in period context; we avoid sensationalizing historical discourse.
-
-CARE — Ethics: We present results as historical descriptions, encourage critical reading, and document limits of title-only metadata.
