@@ -37,13 +37,12 @@ We refer to **Figure 1** when explaining the design.
 This project is framed around a core question: how Republican-era newspapers (1911–1937) framed women when the feminine pronoun “她” appeared explicitly in headlines, and whether that tone shifted with wartime mobilization and the rise of new education and female creators. As outlined in [Figure&nbsp;1](#figure-1), the design proceeds in three layers: first, sentiment scoring of headlines with SnowNLP followed by summaries of yearly and phase-level shares; second, topic discovery using character 2–3 gram TF-IDF with KMeans to identify themes such as mobilization, schooling, and creative authorship and to compare their average sentiment; third, a fixed-effects logistic model estimated on the subset of headlines that explicitly use “她” to test whether the descriptive patterns persist after accounting for newspaper and year differences. Together these steps connect the dataset to the AI Triad—data, algorithms, and computing power—and produce both descriptive trends and controlled estimates (see [Figure&nbsp;1](#figure-1)).
 
 
-```mermaid
 flowchart TD
-  A[Research question] --> B[Headlines explicitly using "她"]
+  A[Research question] --> B[Headlines explicitly using 她]
   B --> C[Sentiment analysis: SnowNLP]
   B --> D[Topic discovery: 2-3 gram TF-IDF + KMeans]
-  B --> E[Fixed-effects logit on "她" subset]
-  C --> F[Year and phase shares]
+  B --> E[Fixed-effects logit on 她 subset]
+  C --> F[Year & phase shares]
   D --> G[Themes: mobilization / schooling / authorship]
   D --> H[Compare average sentiment by theme]
   E --> I[Controls: newspaper FE, year FE]
@@ -51,6 +50,7 @@ flowchart TD
   G --> Z
   H --> Z
   I --> Z
+
 
 
 *Figure 1. Conceptual flowchart of the research design. Source: authors’ visualization (Mermaid) based on Shanghai Library National Periodical Index, 1911–1937.*
