@@ -40,6 +40,7 @@ flowchart TD
   C --> F[Year and phase shares]
   D --> F[Cluster labels and mean sentiment]
   F --> G[Findings descriptive and controlled]
+```
 
 
 
