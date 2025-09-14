@@ -3,7 +3,7 @@
 **File:** `Newspapers_merged_sorted.xlsx`  
 **Source:** 上海图书馆《全国报刊索引》 (Shanghai Library – National Periodical Index, NPI)
 
-**Description (≈130 words).**  
+**Description、.**  
 This dataset is a structured export derived from the Shanghai Library’s National Periodical Index (NPI). We collected all records dated **1911–1937** for which the index indicates the **character “她” appears either in the title or within the article text**, and we keep only the bibliographic **title-level metadata** (no full text). Fields are cleaned and normalized: dates are converted to `YYYY-MM-DD`, and the original file provenance is preserved. The table contains **~20k rows**, enabling reproducible EDA and sentiment analyses that compare the overall corpus of titles with the subset explicitly mentioning “她”. Known caveats include OCR/indexing noise, incomplete author/library fields, and potential duplicates across issues. Please refer to the root README for FAIR/CARE notes; reuse must respect the Shanghai Library/NPI access terms—this repository redistributes **derived metadata only** for academic purposes.
 
 ## Data Dictionary
