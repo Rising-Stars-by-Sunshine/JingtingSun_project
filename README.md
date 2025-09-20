@@ -1,7 +1,7 @@
 # Women and the Pronoun “Ta” in Republican-Era Newspapers (1911–1937)
 
 ## Abstract
-This project studies how Republican-era newspapers (1911–1937) framed women when the newly invented feminine pronoun “Ta” appeared explicitly in headlines, and whether that tone shifted with wartime mobilization and the expansion of new education and female creators. Using ~20,000 title-level records exported from the Shanghai Library National Periodical Index (NPI), we run sentiment analysis (SnowNLP), topic clustering (TF-IDF with KMeans), and a fixed-effects logistic model on the subset of headlines that explicitly use Ta. As outlined below and in **Figure 1**, the design maps to the **AI Triad** (Data, Algorithms, Computing power) and yields both descriptive trends and controlled estimates.
+This project studies how Republican-era newspapers (1911–1937) framed women when the newly invented feminine pronoun “Ta” appeared explicitly in headlines, and whether that tone shifted with wartime mobilization and the expansion of new education and female creators. Using ~20,000 title-level records exported from the Shanghai Library National Periodical Index (NPI), we run sentiment analysis (SnowNLP), topic clustering (TF-IDF with KMeans), and a fixed-effects logistic model on the subset of headlines that explicitly use Ta. As outlined below and in **Figure 1**, the design maps to the **AI Triad** (Data, Algorithms, Computing power) and yields both descriptive trends and controlled estimates. Analyses operate at the headline level rather than full-text; a processed dataset and code are released for reproducibility.
 
 ---
 
