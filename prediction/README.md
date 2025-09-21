@@ -18,4 +18,10 @@
 
 ## Repository
 
-
+-prediction.ipynb
+-ConfusionMatrix(ComplementNB).png
+-ConfusionMatrix(LinearSVC).png
+-confusion matrix(LinearRegression).png
+-ROC.png
+-Precision recall.png
+-README.md
