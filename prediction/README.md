@@ -5,7 +5,7 @@
 
 ---
 
-## TL;DR
+## Methods
 
 - **Leakage control**: remove “她/她们” *before* feature extraction so models must rely on context/outlet/period.  
 - **Features**: char **2–3-gram TF-IDF** on the **masked title** + **One-Hot** for `Newspaper Title` + **One-Hot** for **year-bin** (≤1919, 1920–24, 1925–29, 1930–33, 1934–37, ≥1938).  
