@@ -1,4 +1,4 @@
-# data/ README
+# Data
 
 ## Purpose
 These datasets support a headline-level study of whether the **1937** full-scale war shifted the *tone* of newspaper titles that explicitly use the feminine pronoun **“她.”** The unit of analysis is the **headline title** (no article body). We provide two cleaned, chronologically sorted title tables (1911–1937 and 1938–1949) plus a derived table with sentiment outputs used to build the analysis panel for DiD and event-study models with newspaper and year fixed effects. Where upstream sources have access restrictions, we follow a “derived-data only” policy and share normalized titles/metadata and model outputs rather than raw scans. These files are consumed directly by notebooks in `code/explanation/` (sentiment calibration, figures) and `code/prediction/` (DiD/event-study), enabling reproducibility without redistributing proprietary content.
