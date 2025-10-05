@@ -1,57 +1,61 @@
-# Women and the Pronoun “Ta” in Republican-Era Newspapers (1911–1937)
+# Framing Women with the Pronoun “她” in Republican-Era Newspapers (1911–1949)
+
+> STAT 201: Machine Learning for Social Science · Duke Kunshan University (Autumn 2025)
 
 ## Abstract
-This project studies how Republican-era newspapers (1911–1937) framed women when the newly invented feminine pronoun “Ta” appeared explicitly in headlines, and whether that tone shifted with wartime mobilization and the expansion of new education and female creators. Using ~20,000 title-level records exported from the Shanghai Library National Periodical Index (NPI), we run sentiment analysis (SnowNLP), topic clustering (TF-IDF with KMeans), and a fixed-effects logistic model on the subset of headlines that explicitly use Ta. As outlined below and in **Figure 1**, the design maps to the **AI Triad** (Data, Algorithms, Computing power) and yields both descriptive trends and controlled estimates. Analyses operate at the headline level rather than full-text; a processed dataset and code are released for reproducibility.
+During the Republican era, the feminine pronoun **“她”** entered mass print, making women newly visible. This project tests whether the **1937** full-scale war shifted the *tone* of headlines that explicitly use “她” toward greater positivity. Using 1911–1949 newspaper titles, I classify sentiment (positive/neutral/negative) and estimate difference-in-differences and event-study models with newspaper and year fixed effects. This is crucial to understanding whether rising visibility meant better portrayals or merely a lexical shift, informing current debates on gender representation and fair NLP.  
+**Results will be added to the poster and report.**
 
 ---
 
-## System configuration (local + cloud)
-- **Local:** Python ≥ 3.10, Jupyter Notebook
-- **Libraries:** `pandas`, `matplotlib`, `scikit-learn`, `statsmodels`, `snownlp`
-- **Cloud:** Google Colab tested; repo includes `requirements.txt` for portability
+## Authors and Roles
+- **Jingting Sun** — research design; data curation; sentiment pipeline; DiD/event-study; visualization; writing.
 
 ---
 
-## Dataset note (what the table contains)
-This dataset is a structured export derived from the **Shanghai Library’s National Periodical Index (NPI)**. We collected all records dated **1911–1937** for which the index indicates the character “她” appears either in the title or within the article text, and we keep **bibliographic title-level metadata only** (no full text). Fields are cleaned and normalized (dates in **YYYY-MM-DD**, provenance preserved). The table contains about **20,000 rows**, enabling reproducible EDA and sentiment analyses that compare the overall corpus of titles with the subset explicitly mentioning “她” in the headline.
+## Disclaimer
+This repository supports the final research proposal submitted to **STATS 201: Machine Learning for Social Science, instructed by Prof. Luyao Zhang at Duke Kunshan University in Autumn 2025**.
 
 ---
 
-## Research design and AI-Triad connections
-We refer to **Figure 1** when explaining the design.
+## Acknowledgments
+Professors, classmates, AIGC tools, and open-source communities that supported this work. Any errors are my own.
 
-- **Data**  
-  Structured NPI export (1911–1937), title-level metadata only; normalized dates and preserved provenance; comparisons between the full title corpus and the explicit-Ta subset.
+---
 
-- **Algorithms**  
-  1) **Sentiment:** SnowNLP probability → positive / neutral / negative with a small neutral band.  
-  2) **Topics:** character 2–3-gram **TF-IDF** + **KMeans** to surface themes (e.g., war mobilization, schooling, creators) and compare mean sentiment by theme.  
-  3) **Regression:** **fixed-effects logistic** on the **explicit-Ta subset** (title contains Ta), holding newspaper and year constant, to assess shifts across historical phases and topic flags.
+## Statement of Growth
+I strengthened skills in text preprocessing, sentiment calibration, fixed-effects causal designs (DiD/event-study), and reproducible research (versioned code, environments, scripted figures).
 
-- **Computing power**  
-  Dataset is modest; CPU suffices for all analyses. GPU is optional for transformer-based robustness checks.
+---
 
-```mermaid
-flowchart TD
-  A[Research question] --> B[Framing when Ta appears in headline]
-  B --> C[Sentiment with SnowNLP]
-  B --> D[Topics with TF IDF and KMeans]
-  B --> E[Logit on explicit Ta subset with fixed effects]
-  C --> F[Year and phase shares]
-  D --> F[Cluster labels and mean sentiment]
-  F --> G[Findings descriptive and controlled]
-```
-Figure 1. Conceptual flowchart of the research design. Source: authors’ visualization based on Shanghai Library National Periodical Index 1911–1937.
+## Table of Contents
+- [Navigation Instructions](#navigation-instructions)  
+- [System Configurations](#system-configurations)  
+- [Embedded Media](#embedded-media)
 
+---
 
+## Navigation Instructions
+- **Code (explanation/visualization):** [`code/explanation/`](code/explanation/) — sentiment classification, calibration checks, plots.  
+- **Code (prediction/causal):** [`code/prediction/`](code/prediction/) — DiD and event-study with clustered SEs & fixed effects.  
+- **Datasets & preprocessing:** see [`data/README.md`](data/README.md); processed tables in `data/processed/` (CSV/Parquet). Raw files (if restricted) remain in `data/raw/` and are git-ignored.  
+- **Figures:** exported charts live in [`visualizations/`](visualizations/).
 
-## FAIR & CARE Principles
+---
 
-### FAIR
-- **Findable**: Public GitHub repo with a clear directory structure and dataset metadata.
-- **Accessible**: Open formats (CSV/XLSX), versioned code and data subset; instructions for local and Colab runs.
-- **Interoperable**: Standardized fields (e.g., date in `YYYY-MM-DD`), UTF-8 text; analysis in common Python libraries.
-- **Reusable**: Data dictionary, preprocessing steps, and notebooks enable replication and extension.
+## System Configurations
+**One-liner quickstart (creates venv → installs deps → smoke-test):**
+```bash
+python -m venv .venv && \
+( source .venv/bin/activate || .\.venv\Scripts\activate ) && \
+python -m pip install --upgrade pip && \
+pip install -r requirements.txt && \
+python - <<'PY'
+import importlib
+mods=["pandas","numpy","statsmodels","sklearn","matplotlib","pyarrow"]
+[importlib.import_module(m) for m in mods]
+print("Environment OK ✅")
+PY
 
 ### CARE
 - **Collective Benefit**: Results support research on gender representation and informed media practices.
