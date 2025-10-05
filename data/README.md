@@ -1,88 +1,98 @@
-# Republican-Era Newspapers (1911–1937) — Title-Level Dataset & Processed Outputs
+# data/ README
 
-**Source:** 上海图书馆《全国报刊索引》 (Shanghai Library – National Periodical Index, **NPI**)  
-**Files:** `Newspapers_merged_sorted.xlsx` (raw title-level export) • `data/processed/titles_sentiment.csv` (processed, public)  
+## Purpose (≈130 words)
+These datasets support a headline-level study of whether the **1937** full-scale war shifted the *tone* of newspaper titles that explicitly use the feminine pronoun **“她.”** The unit of analysis is the **headline title** (no article body). We provide two cleaned, chronologically sorted title tables (1911–1937 and 1938–1949) plus a derived table with sentiment outputs used to build the analysis panel for DiD and event-study models with newspaper and year fixed effects. Where upstream sources have access restrictions, we follow a “derived-data only” policy and share normalized titles/metadata and model outputs rather than raw scans. These files are consumed directly by notebooks in `code/explanation/` (sentiment calibration, figures) and `code/prediction/` (DiD/event-study), enabling reproducibility without redistributing proprietary content.
 
-> **Scope disclaimer.** This repository redistributes **derived, title-level metadata only** (no full texts). All analyses speak to **headline framing** and must **not** be extrapolated to full-article arguments. Please respect NPI access terms.
-
----
-
-## 📦 Contents
-
-- `Newspapers_merged_sorted.xlsx` — merged and normalized title-level export (raw).
-- `data/processed/titles_sentiment.csv` — **core processed table** released for reproducibility (schema below).
-- `data/validation/` *(optional)* — human-coded validation set (e.g., `headlines_gold.tsv`) for SnowNLP threshold calibration and agreement checks.
-- `part1/` — code to clean, score sentiment, create variables, and reproduce Part I figures/tables.
-- `explanatory/` — Part II (literature mapping) assets; see its own `README.md`.
+## Origin and Source
+Titles/metadata come from **Republican-era newspaper indexes**, primarily the Shanghai Library National Periodical Index (1911–1949). Sentiment variables are **derived** using calibrated classifiers (e.g., SnowNLP / SentProp) via our preprocessing scripts. Please respect the original repositories’ terms; raw scans are **not** included.
 
 ---
 
-## 📘 Dataset Overview
+## Dataset overview
+| File | Years | What it contains | How it was produced |
+|---|---|---|---|
+| `1911-1937_merged_sorted.xlsx` | 1911–1937 | Cleaned, de-duplicated titles + standardized newspaper names; basic flags | Merged index exports → Unicode/punctuation normalization → newspaper name canonicalization → drop exact/near-duplicates → compute flags → chronological sort |
+| `1938-1949_merged_sorted.xlsx` | 1938–1949 | Same schema as above for the late period | Same pipeline; cut at 1938 to align with 1937 shock windows |
+| `final_sentiment_sentprop.xlsx` | 1911–1949 | Titles joined with sentiment scores/classes and analysis helpers | Left-join early & late tables → run SnowNLP/SentProp → calibrate thresholds → map to classes; add modeling variables (`post1937`, interactions) |
 
-This dataset is a structured export derived from the Shanghai Library’s National Periodical Index (NPI). We collected records dated **1911–1937** for which the index indicates that the character **“她”** appears **in the title** or **within the article text**. We retain only **bibliographic title-level metadata**. Dates are normalized to `YYYY-MM-DD`, and provenance is preserved.
-
-The table contains approximately **20,000 rows** and supports reproducible exploratory analysis and title-level sentiment scoring that compare (i) the overall corpus of titles with (ii) the subset explicitly mentioning **“她”** in the headline.
-
-> **Known caveats:** indexing noise, occasional missing library/author fields, and possible duplicates across issues. See **Quality notes** below.
-
----
-
-## 🧭 Data Dictionary (`Newspapers_merged_sorted.xlsx`)
-
-| column          | type   | description                                                   |
-|-----------------|--------|---------------------------------------------------------------|
-| `Title`         | string | Article title (headline)                                      |
-| `Author`        | string | Author (if available)                                         |
-| `Newspaper Title` | string | Newspaper/outlet name                                       |
-| `Time`          | string | Issue date in `YYYY-MM-DD`                                    |
-| `year`          | int    | Year extracted from `Time`                                    |
-| `藏馆`            | string | Holding library (if any)                                     |
-| `馆藏索取号`        | string | Call number (if any)                                        |
-| `分类号`            | string | Classification (if any)                                     |
-| `SourceFile`    | string | Relative path to the source TXT used during merging           |
-| `FileNumber`    | int    | Index extracted from filename (expected range **1–404**)      |
-| `RowInFile`     | int    | Order of the record within its original TXT                   |
+> Paths in notebooks assume these live in `data/processed/` (adjust if needed).
 
 ---
 
-## 🧪 Processed Table (public): `data/processed/titles_sentiment.csv`
+## Variable dictionaries (by dataset)
 
-This is the **release artifact** used by the paper and figures. It is title-level only and contains derived variables aligned with **Table 1** in the manuscript.
+### A) `1911-1937_merged_sorted.xlsx`
+Core columns
+| Variable | Type | Description |
+|---|---|---|
+| `id` | string | Unique row identifier. |
+| `year` | int | Publication year (1911–1937). |
+| `paper` | string | Standardized newspaper/source name. |
+| `title` | string | Headline title (normalized; article body not included). |
+| `has_ta` | int/bool | 1 if the title explicitly contains **“她”**, else 0. |
+| `woman_kw` | int/bool | 1 if the title mentions women without “她” (e.g., 女子/妇女/女性/女校/女工), else 0. |
+| `len_chars` | int | Title length in Chinese characters (used as control). |
+| `source_index` | string | Upstream index tag (e.g., NPI). |
+| `notes` | string | Manual fixes / OCR remarks (optional). |
 
-| field               | type       | description                                                                 |
-|---------------------|------------|-----------------------------------------------------------------------------|
-| `paper_id`          | string     | Newspaper/outlet id (from `Newspaper Title`/`SourceFile`)                  |
-| `date`              | date       | `YYYY-MM-DD`                                                                |
-| `year`              | int        | extracted year                                                              |
-| `phase_1931plus`    | {0,1}      | 1 if 1931–1937                                                              |
-| `explicit_she_title`| {0,1}      | 1 if the **title** contains “她”                                            |
-| `women_implicit`    | {0,1}      | women referenced without “她” (e.g., 妇女/女子/女工), excluding explicit-she titles |
-| `education_topic`   | {0,1}      | education lexicon match (教育/学校/女校/师范/学生/课程/…)                     |
-| `editorial`         | {0,1}      | editorial/opinion page (heuristic: tags/keywords)                          |
-| `female_creator`    | {0,1}      | creator appears female (conservative cues; ambiguous=0)                     |
-| `headline_len`      | int        | character count of the title                                               |
-| `sentiment_score`   | float      | SnowNLP score in [0,1]                                                     |
-| `sentiment_label`   | categorical| Positive (≥0.55), Neutral (0.45–0.55), Negative (≤0.45); **calibrated if validation provided** |
-| `cluster_id`        | int / NA   | optional unsupervised topic id (if available)                              |
-
-> **Reusability.** This single table is sufficient to regenerate our descriptive figures and regression tables without any full text.
+How created
+- Merge index exports; normalize Unicode and punctuation.
+- Canonicalize newspaper names; parse and validate year.
+- Drop duplicates via (`paper`, `year`, `title`) and fuzzy match on trimmed titles.
+- Compute `has_ta`, `woman_kw` via regex lists; compute `len_chars`.
+- Sort by year and write to Excel.
 
 ---
 
-## 🔁 Replicability
+### B) `1938-1949_merged_sorted.xlsx`
+Core columns (same schema; different year range)
+| Variable | Type | Description |
+|---|---|---|
+| `id` | string | Unique row identifier. |
+| `year` | int | Publication year (1938–1949). |
+| `paper` | string | Standardized newspaper/source name. |
+| `title` | string | Headline title (normalized). |
+| `has_ta` | int/bool | 1 if **“她”** appears, else 0. |
+| `woman_kw` | int/bool | Women-related keywords without “她.” |
+| `len_chars` | int | Title length. |
+| `source_index` | string | Upstream index tag. |
+| `notes` | string | Optional curation notes. |
 
-**Inputs.**
-- NPI export filtered to **1911–1937** with query **“她”** in title/body; we only use **title-level** fields.
+How created
+- Same pipeline as dataset A, applied to the post-1937 period.
 
-**Deterministic merge.**
-- Raw TXT exports → `Newspapers_merged_sorted.xlsx`; dates normalized; provenance via `SourceFile`, `FileNumber (1–404)`, `RowInFile`.
+---
 
-**Environment.**
-- See `requirements_part1.txt` and scripts in `part1/code/`.
+### C) `final_sentiment_sentprop.xlsx`
+What it adds
+- Sentiment scores and classes from calibrated models; modeling helpers for DiD/event-study.
 
-**One-line run (example).**
-```bash
-# from repo root
-pip install -r requirements_part1.txt
-bash part1/run_part1.sh
+Core & derived columns
+| Variable | Type | Description |
+|---|---|---|
+| `id`, `year`, `paper`, `title`, `has_ta`, `woman_kw`, `len_chars` | — | Carried over from A/B. |
+| `snownlp_prob` | float | SnowNLP polarity probability (0–1). |
+| `sentprop_score` | float | SentProp score (0–1) or standardized z-score. |
+| `sent_score` | float | Harmonized sentiment score used in plots/tables (e.g., average or calibrated transform). |
+| `sent_class` | string | Sentiment class mapped from `sent_score`: `Positive` / `Neutral` / `Negative`. Default thresholds: **≥0.55 → Positive; ≤0.45 → Negative; otherwise Neutral**. |
+| `post1937` | int/bool | 1 if `year ≥ 1937`, else 0. |
+| `phase` | string | Period label: `pre1937`, `1937_1945`, `post1945` (if created). |
+| `ta_x_post` | int | Interaction `has_ta * post1937` for DiD. |
+| `paper_fe`, `year_fe` | string/int | Encoded fixed-effect labels for modeling tables (optional). |
+
+How created
+- Concatenate A & B → left-join model outputs by `id` (fallback key: `paper`+`year`+`title`).
+- Calibrate thresholds against a manually checked validation set; map to `sent_class`.
+- Add `post1937` and interactions; write analysis-ready Excel.
+
+---
+
+## Usage notes
+- Load with `pandas.read_excel()`; enforce dtypes as above.
+- Keep restricted raw sources outside the repo (e.g., `data/raw/`, git-ignored).
+- If you regenerate features, keep the same schemas so notebooks run unchanged.
+
+## License & Ethics
+Derived tables are released for educational use under the repository license. Do not redistribute upstream copyrighted materials; cite original indexes if you reuse these derivatives.
+
 
