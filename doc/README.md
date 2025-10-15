@@ -2,8 +2,8 @@
 
 This folder hosts the public-facing artifacts of the project.
 
-- **Poster (PDF):** [poster.pdf](./poster.pdf) *(to be added)*
-- **Final Report (PDF):** [final_report.pdf](./final_report.pdf) *(to be added)*
+- **Poster (PDF):** [poster.pdf](./Jingting Sun_poster.pdf) 
+- **Final Report (PDF):** [final_report.pdf](./Jingting Sun_Final Proposal.pdf) 
 - **Course:** STAT 201 · Machine Learning for Social Science (Autumn 2025) · Duke Kunshan University
 
 ---
