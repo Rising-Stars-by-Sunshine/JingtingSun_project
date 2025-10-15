@@ -36,17 +36,18 @@ This project strengthened my skills in (i) historical text preprocessing and met
 ---
 
 ## Navigation Instructions
-- **Code (explanation / visualization):** see [`code/explanation/`](code/explanation/) for sentiment classification, calibration checks, and plotting scripts.  
-- **Code (prediction / causal):** see [`code/prediction/`](code/prediction/) for DiD and event-study models with newspaper & year fixed effects (clustered by newspaper).  
-- **Datasets & preprocessing:** descriptions and provenance in [`data/README.md`](data/README.md). Processed, analysis-ready tables live in `data/processed/`; raw sources (if access-restricted) are kept in `data/raw/` and are git-ignored.  
-- **Figures:** exported images are stored in [`visualizations/`](visualizations/) and referenced by the poster/report.
+- **Code (explanation / visualization):** see [code/explanation/](code/explanation/) for sentiment classification, calibration checks, and plotting scripts.  
+- **Code (prediction / causal):** see [code/prediction/](code/prediction/) for DiD and event-study models with newspaper & year fixed effects (clustered by newspaper).  
+- **Datasets & preprocessing:** descriptions and provenance in [data/README.md](data/README.md). Processed, analysis-ready tables live in data/processed/; raw sources (if access-restricted) are kept in data/raw/ and are git-ignored.  
+- **Figures:** exported images are stored in [visualizations/](visualizations/) and referenced by the poster/report.
 
 ---
 
 ## System Configurations
 **Quickstart (create venv → install deps → smoke-test imports).**  
 *macOS/Linux (bash/zsh):*
-```bash
+
+bash
 python -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
@@ -66,8 +67,6 @@ PY
 - **Ethics**: We present findings as historical descriptions, encourage critical reading, and document limitations of title-only metadata.
 ---
 
+
 ## Media
-- **Code (Demo):** see (https://duke.box.com/s/nsc40udbjrkofunm1ev50j005slziq4q) 
-
-
----
+- **Code (Demo):** see (https://duke.box.com/s/nsc40udbjrkofunm1ev50j005slziq4q)
