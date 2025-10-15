@@ -8,7 +8,7 @@ This folder hosts the public-facing artifacts of the project.
 
 ---
 
-## Field Trip Reflection — AI Products: AWS vs. Tencent  *(≈200 words + 1 figure)*
+## Field Trip Reflection — AI Products: AWS vs. Tencent  
 
 ### Part A — AWS vs. Tencent (observations, promise & peril)
 On site, the **AWS** briefing emphasized modular, audit-ready cloud ML: **SageMaker** for training/hosting, **Bedrock** for foundation models, data lakes, and compliance tooling (IAM, KMS, CloudTrail). In the **Tencent** exhibition hall we saw city-scale dashboards and healthcare demos, with a clear **Green Cloud** theme: carbon-aware scheduling, renewables in data centers, and **PUE/WUE** tracking.
@@ -20,7 +20,8 @@ On site, the **AWS** briefing emphasized modular, audit-ready cloud ML: **SageMa
 **Ethics & SDGs.** To advance SDG **10/3/11**, pair explanations (model cards, SHAP) with purpose limits, privacy-by-design, audit logs, fairness checks across districts/hospitals, and publish the energy/water footprint of deployments.
 
 > Joint photo from the visit:  
-> ![AI Products: AWS vs Tencent — Field Trip Joint Photo](../visualizations/fieldtrip_aws_tencent_joint.jpg)  
+> ![AWS — Field Trip Photo](../visualizations/AWS.jpeg)
+
 > *Panel A: AWS (modular ML tools). Panel B: Tencent (green cloud computing).*
 
 ---
