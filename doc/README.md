@@ -20,7 +20,7 @@ On site, the **AWS** briefing emphasized modular, audit-ready cloud ML: **SageMa
 **Ethics & SDGs.** To advance SDG **10/3/11**, pair explanations (model cards, SHAP) with purpose limits, privacy-by-design, audit logs, fairness checks across districts/hospitals, and publish the energy/water footprint of deployments.
 
 > Joint photo from the visit:  
-> ![AWS — Field Trip Photo](../visualizations/AWS.jpeg)
+> ![AWS — Field Trip Photo](../visualizations/AWS.png)
 
 > *Panel A: AWS (modular ML tools). Panel B: Tencent (green cloud computing).*
 
